@@ -1,0 +1,118 @@
+# ============================================================================
+# CONFIGURAÇÃO DE SEGURANÇA PARA APACHE
+# ============================================================================
+
+# Ativa o módulo mod_rewrite
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+</IfModule>
+
+# ============================================================================
+# HEADERS DE SEGURANÇA
+# ============================================================================
+
+<IfModule mod_headers.c>
+  # Força HTTPS (descomente se necessário)
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  
+  # Previne ataques de clickjacking
+  Header always set X-Frame-Options "DENY"
+  
+  # Desativa mimetype sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # Ativa XSS Protection
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # Content Security Policy
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://wa.me https://www.instagram.com https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+  
+  # Política de Referrer
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Permissions Policy (antes Feature Policy)
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
+  
+  # Remove informações do servidor
+  Header always unset X-Powered-By
+  Header always unset X-AspNet-Version
+  Header always unset X-AspNetMvc-Version
+</IfModule>
+
+# ============================================================================
+# CACHE E COMPRESSÃO
+# ============================================================================
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Cache de HTML (1 hora)
+  ExpiresByType text/html "access plus 1 hour"
+  
+  # Cache de CSS e JS (1 mês)
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType text/javascript "access plus 1 month"
+  
+  # Cache de imagens (1 mês)
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  
+  # Cache de fontes (1 ano)
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff "access plus 1 year"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# ============================================================================
+# PROTEÇÃO DE ARQUIVOS
+# ============================================================================
+
+# Bloqueia acesso a arquivos sensíveis
+<FilesMatch "^\.">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# Bloqueia acesso direto a certos arquivos
+<FilesMatch "\.(env|config|md|sql|json)$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>
+
+# ============================================================================
+# PREVENÇÃO DE ATAQUES
+# ============================================================================
+
+# Limita tamanho de upload (10MB)
+<IfModule mod_php.c>
+  php_value upload_max_filesize 10M
+  php_value post_max_size 10M
+</IfModule>
+
+# Desativa directory listing
+Options -Indexes
+
+# Previne SQL injection através de URL
+<IfModule mod_rewrite.c>
+  RewriteCond %{QUERY_STRING} (<|>|'|"|%0A|%0D) [NC]
+  RewriteRule ^ - [F]
+</IfModule>

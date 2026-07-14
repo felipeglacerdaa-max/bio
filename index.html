@@ -1,18 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Segurança: Headers essenciais -->
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com 'nonce-{{CSP_NONCE}}'; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://wa.me https://www.instagram.com https://www.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="DENY" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Metadados gerais -->
   <meta name="description" content="Isaque Santos — Salão de Beleza Feminina. Agende seu horário e acompanhe nossos trabalhos no Instagram." />
   <meta name="theme-color" content="#2a0a32" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta property="og:title" content="Isaque Santos | Salão de Beleza Feminina" />
   <meta property="og:description" content="Beleza com elegância. Agende seu horário pelo WhatsApp." />
   <meta property="og:image" content="assets/logo.png" />
+  <meta property="og:type" content="website" />
+  
   <title>Isaque Santos | Salão de Beleza Feminina</title>
+  
+  <!-- Recursos externos com Subresource Integrity -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet" integrity="sha384-Mk7WCJPFb5VJkEV8L/2x/8vJ4eFt72ZNrL63zJ6pBN4hN3xFgvfYLFOhxsNPB4Nx" crossorigin="anonymous" />
   <link rel="stylesheet" href="styles.css" />
+  
+  <!-- Segurança adicional -->
+  <meta name="permissions-policy" content="geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()" />
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -40,7 +58,7 @@
           <span class="ornament__line"></span>
         </div>
       </header>
-
+      
       <div class="card__actions-panel">
         <nav class="card__links" aria-label="Contato e redes sociais">
           <a
