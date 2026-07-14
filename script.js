@@ -1,30 +1,29 @@
-const coverWrapper = document.getElementById('coverWrapper');
-const coverButton = document.getElementById('coverButton');
-const coverInput = document.getElementById('coverInput');
-const avatarButton = document.getElementById('avatarButton');
-const avatarInput = document.getElementById('avatarInput');
-const avatarImage = document.getElementById('avatarImage');
+const CONFIG = {
+  location: {
+    url: '',
+    address: 'Rua Professor Clovis Salgado, 400 — Centro, Betim - MG',
+    label: 'Rua Prof. Clovis Salgado, 400 — Betim',
+  },
+};
 
-coverButton.addEventListener('click', () => coverInput.click());
-avatarButton.addEventListener('click', () => avatarInput.click());
+document.getElementById('year').textContent = new Date().getFullYear();
 
-function previewImage(file, callback) {
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = () => callback(reader.result);
-  reader.readAsDataURL(file);
+const locationLink = document.getElementById('locationLink');
+const locationText = document.getElementById('locationText');
+
+if (CONFIG.location.label) {
+  locationText.textContent = CONFIG.location.label;
 }
 
-coverInput.addEventListener('change', (event) => {
-  const file = event.target.files[0];
-  previewImage(file, (src) => {
-    coverWrapper.style.backgroundImage = `url(${src})`;
+if (CONFIG.location.url) {
+  locationLink.href = CONFIG.location.url;
+} else if (CONFIG.location.address) {
+  const query = encodeURIComponent(CONFIG.location.address);
+  locationLink.href = `https://www.google.com/maps/search/?api=1&query=${query}`;
+} else {
+  locationLink.addEventListener('click', (event) => {
+    event.preventDefault();
   });
-});
-
-avatarInput.addEventListener('change', (event) => {
-  const file = event.target.files[0];
-  previewImage(file, (src) => {
-    avatarImage.src = src;
-  });
-});
+  locationLink.setAttribute('aria-disabled', 'true');
+  locationLink.classList.add('link-btn--pending');
+}
