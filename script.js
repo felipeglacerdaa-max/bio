@@ -1,8 +1,8 @@
 const CONFIG = {
   location: {
-    url: '',
-    address: 'Rua Professor Clovis Salgado, 400 — Centro, Betim - MG',
-    label: 'Rua Prof. Clovis Salgado, 400 — Betim',
+    url: 'https://maps.app.goo.gl/wXfVYmRfDfh8Z7WD9',
+    address: 'R. da Mata, 84 - Estaleiro, Contagem - MG',
+    label: 'R. da Mata, 84 - Estaleiro, Contagem - MG',
   },
 };
 
